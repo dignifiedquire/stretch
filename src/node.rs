@@ -8,7 +8,7 @@ use std::collections::HashMap;
 use core::any::Any;
 use core::ops::Drop;
 
-use crate::forest::Forest;
+use crate::forest::{Forest, NodeData, StretchNodeData};
 use crate::geometry::Size;
 use crate::id::{self, NodeId};
 use crate::number::Number;
@@ -24,6 +24,8 @@ lazy_static! {
 }
 
 pub trait Node: Clone + std::fmt::Debug + PartialEq + Eq + std::hash::Hash {
+    type Data: NodeData;
+
     fn new(instance: id::Id, local: id::Id) -> Self;
 
     fn local(&self) -> id::Id;
@@ -36,6 +38,8 @@ pub struct StretchNode {
 }
 
 impl Node for StretchNode {
+    type Data = StretchNodeData;
+
     fn new(instance: id::Id, local: id::Id) -> Self {
         StretchNode { instance, local }
     }
@@ -50,7 +54,7 @@ pub struct Stretch<N: Node = StretchNode> {
     nodes: id::Allocator,
     nodes_to_ids: HashMap<N, NodeId>,
     ids_to_nodes: HashMap<NodeId, N>,
-    forest: Forest,
+    forest: Forest<N::Data>,
 }
 
 impl<N: Node> Default for Stretch<N> {
@@ -135,7 +139,7 @@ impl<N: Node> Stretch<N> {
 
     pub fn set_measure(&mut self, node: &N, measure: Option<MeasureFunc>) -> Result<(), Error<N>> {
         let id = self.find_node(node)?;
-        self.forest.nodes[id].measure = measure;
+        *self.forest.nodes[id].measure_mut() = measure;
         self.forest.mark_dirty(id);
         Ok(())
     }
@@ -209,19 +213,19 @@ impl<N: Node> Stretch<N> {
 
     pub fn set_style(&mut self, node: &N, style: Style) -> Result<(), Error<N>> {
         let id = self.find_node(node)?;
-        self.forest.nodes[id].style = style;
+        *self.forest.nodes[id].style_mut() = style;
         self.forest.mark_dirty(id);
         Ok(())
     }
 
     pub fn style(&self, node: &N) -> Result<&Style, Error<N>> {
         let id = self.find_node(node)?;
-        Ok(&self.forest.nodes[id].style)
+        Ok(self.forest.nodes[id].style())
     }
 
     pub fn layout(&self, node: &N) -> Result<&Layout, Error<N>> {
         let id = self.find_node(node)?;
-        Ok(&self.forest.nodes[id].layout)
+        Ok(self.forest.nodes[id].layout())
     }
 
     pub fn mark_dirty(&mut self, node: &N) -> Result<(), Error<N>> {
@@ -232,7 +236,7 @@ impl<N: Node> Stretch<N> {
 
     pub fn dirty(&self, node: &N) -> Result<bool, Error<N>> {
         let id = self.find_node(node)?;
-        Ok(self.forest.nodes[id].is_dirty)
+        Ok(self.forest.nodes[id].is_dirty())
     }
 
     pub fn compute_layout(&mut self, node: &N, size: Size<Number>) -> Result<(), Error<N>> {

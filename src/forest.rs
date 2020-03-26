@@ -13,7 +13,23 @@ use crate::result::{Cache, Layout};
 use crate::style::Style;
 use crate::Error;
 
-pub(crate) struct NodeData {
+pub trait NodeData {
+    fn new(style: Style) -> Self;
+    fn new_leaf(style: Style, measure: MeasureFunc) -> Self;
+
+    fn style(&self) -> &Style;
+    fn style_mut(&mut self) -> &mut Style;
+    fn measure(&self) -> Option<&MeasureFunc>;
+    fn measure_mut(&mut self) -> &mut Option<MeasureFunc>;
+    fn layout(&self) -> &Layout;
+    fn layout_mut(&mut self) -> &mut Layout;
+    fn layout_cache(&self) -> Option<&Cache>;
+    fn layout_cache_mut(&mut self) -> &mut Option<Cache>;
+    fn is_dirty(&self) -> bool;
+    fn set_dirty(&mut self, dirty: bool);
+}
+
+pub struct StretchNodeData {
     pub(crate) style: Style,
     pub(crate) measure: Option<MeasureFunc>,
     pub(crate) layout: Layout,
@@ -21,23 +37,54 @@ pub(crate) struct NodeData {
     pub(crate) is_dirty: bool,
 }
 
-impl NodeData {
+impl NodeData for StretchNodeData {
     fn new_leaf(style: Style, measure: MeasureFunc) -> Self {
-        NodeData { style, measure: Some(measure), layout_cache: None, layout: Layout::new(), is_dirty: true }
+        StretchNodeData { style, measure: Some(measure), layout_cache: None, layout: Layout::new(), is_dirty: true }
     }
 
     fn new(style: Style) -> Self {
-        NodeData { style, measure: None, layout_cache: None, layout: Layout::new(), is_dirty: true }
+        StretchNodeData { style, measure: None, layout_cache: None, layout: Layout::new(), is_dirty: true }
+    }
+
+    fn style(&self) -> &Style {
+        &self.style
+    }
+    fn style_mut(&mut self) -> &mut Style {
+        &mut self.style
+    }
+    fn measure(&self) -> Option<&MeasureFunc> {
+        self.measure.as_ref()
+    }
+    fn measure_mut(&mut self) -> &mut Option<MeasureFunc> {
+        &mut self.measure
+    }
+    fn layout(&self) -> &Layout {
+        &self.layout
+    }
+    fn layout_mut(&mut self) -> &mut Layout {
+        &mut self.layout
+    }
+    fn layout_cache(&self) -> Option<&Cache> {
+        self.layout_cache.as_ref()
+    }
+    fn layout_cache_mut(&mut self) -> &mut Option<Cache> {
+        &mut self.layout_cache
+    }
+    fn is_dirty(&self) -> bool {
+        self.is_dirty
+    }
+    fn set_dirty(&mut self, dirty: bool) {
+        self.is_dirty = dirty;
     }
 }
 
-pub(crate) struct Forest {
-    pub(crate) nodes: Vec<NodeData>,
+pub(crate) struct Forest<D: NodeData> {
+    pub(crate) nodes: Vec<D>,
     pub(crate) children: Vec<Vec<NodeId>>,
     pub(crate) parents: Vec<Vec<NodeId>>,
 }
 
-impl Forest {
+impl<D: NodeData> Forest<D> {
     pub fn with_capacity(capacity: usize) -> Self {
         Forest {
             nodes: Vec::with_capacity(capacity),
@@ -48,7 +95,7 @@ impl Forest {
 
     pub fn new_leaf(&mut self, style: Style, measure: MeasureFunc) -> NodeId {
         let id = self.nodes.len();
-        self.nodes.push(NodeData::new_leaf(style, measure));
+        self.nodes.push(D::new_leaf(style, measure));
         self.children.push(Vec::with_capacity(0));
         self.parents.push(Vec::with_capacity(1));
         id
@@ -59,7 +106,7 @@ impl Forest {
         for child in &children {
             self.parents[*child].push(id);
         }
-        self.nodes.push(NodeData::new(style));
+        self.nodes.push(D::new(style));
         self.children.push(children);
         self.parents.push(Vec::with_capacity(1));
         id
@@ -159,10 +206,10 @@ impl Forest {
     }
 
     pub fn mark_dirty(&mut self, node: NodeId) {
-        fn mark_dirty_impl(nodes: &mut Vec<NodeData>, parents: &[Vec<NodeId>], node_id: NodeId) {
+        fn mark_dirty_impl<D: NodeData>(nodes: &mut Vec<D>, parents: &[Vec<NodeId>], node_id: NodeId) {
             let node = &mut nodes[node_id];
-            node.layout_cache = None;
-            node.is_dirty = true;
+            *node.layout_cache_mut() = None;
+            node.set_dirty(true);
 
             for parent in &parents[node_id] {
                 mark_dirty_impl(nodes, parents, *parent);
