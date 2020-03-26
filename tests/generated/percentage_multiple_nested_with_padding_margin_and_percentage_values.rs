@@ -1,7 +1,7 @@
 #[test]
 fn percentage_multiple_nested_with_padding_margin_and_percentage_values() {
     let mut stretch = stretch::Stretch::new();
-    let node000 = stretch
+    let node000: stretch::node::StretchNode = stretch
         .new_node(
             stretch::style::Style {
                 size: stretch::geometry::Size {
@@ -27,7 +27,7 @@ fn percentage_multiple_nested_with_padding_margin_and_percentage_values() {
             vec![],
         )
         .unwrap();
-    let node00 = stretch
+    let node00: stretch::node::StretchNode = stretch
         .new_node(
             stretch::style::Style {
                 flex_direction: stretch::style::FlexDirection::Column,
@@ -54,7 +54,7 @@ fn percentage_multiple_nested_with_padding_margin_and_percentage_values() {
             vec![node000],
         )
         .unwrap();
-    let node0 = stretch
+    let node0: stretch::node::StretchNode = stretch
         .new_node(
             stretch::style::Style {
                 flex_direction: stretch::style::FlexDirection::Column,
@@ -83,7 +83,7 @@ fn percentage_multiple_nested_with_padding_margin_and_percentage_values() {
             vec![node00],
         )
         .unwrap();
-    let node1 = stretch
+    let node1: stretch::node::StretchNode = stretch
         .new_node(
             stretch::style::Style {
                 flex_grow: 4f32,
@@ -97,7 +97,7 @@ fn percentage_multiple_nested_with_padding_margin_and_percentage_values() {
             vec![],
         )
         .unwrap();
-    let node = stretch
+    let node: stretch::node::StretchNode = stretch
         .new_node(
             stretch::style::Style {
                 flex_direction: stretch::style::FlexDirection::Column,
@@ -111,25 +111,25 @@ fn percentage_multiple_nested_with_padding_margin_and_percentage_values() {
             vec![node0, node1],
         )
         .unwrap();
-    stretch.compute_layout(node, stretch::geometry::Size::undefined()).unwrap();
-    assert_eq!(stretch.layout(node).unwrap().size.width, 200f32);
-    assert_eq!(stretch.layout(node).unwrap().size.height, 200f32);
-    assert_eq!(stretch.layout(node).unwrap().location.x, 0f32);
-    assert_eq!(stretch.layout(node).unwrap().location.y, 0f32);
-    assert_eq!(stretch.layout(node0).unwrap().size.width, 190f32);
-    assert_eq!(stretch.layout(node0).unwrap().size.height, 48f32);
-    assert_eq!(stretch.layout(node0).unwrap().location.x, 5f32);
-    assert_eq!(stretch.layout(node0).unwrap().location.y, 5f32);
-    assert_eq!(stretch.layout(node00).unwrap().size.width, 92f32);
-    assert_eq!(stretch.layout(node00).unwrap().size.height, 25f32);
-    assert_eq!(stretch.layout(node00).unwrap().location.x, 8f32);
-    assert_eq!(stretch.layout(node00).unwrap().location.y, 8f32);
-    assert_eq!(stretch.layout(node000).unwrap().size.width, 36f32);
-    assert_eq!(stretch.layout(node000).unwrap().size.height, 6f32);
-    assert_eq!(stretch.layout(node000).unwrap().location.x, 10f32);
-    assert_eq!(stretch.layout(node000).unwrap().location.y, 10f32);
-    assert_eq!(stretch.layout(node1).unwrap().size.width, 200f32);
-    assert_eq!(stretch.layout(node1).unwrap().size.height, 142f32);
-    assert_eq!(stretch.layout(node1).unwrap().location.x, 0f32);
-    assert_eq!(stretch.layout(node1).unwrap().location.y, 58f32);
+    stretch.compute_layout(&node, stretch::geometry::Size::undefined()).unwrap();
+    assert_eq!(stretch.layout(&node).unwrap().size.width, 200f32);
+    assert_eq!(stretch.layout(&node).unwrap().size.height, 200f32);
+    assert_eq!(stretch.layout(&node).unwrap().location.x, 0f32);
+    assert_eq!(stretch.layout(&node).unwrap().location.y, 0f32);
+    assert_eq!(stretch.layout(&node0).unwrap().size.width, 190f32);
+    assert_eq!(stretch.layout(&node0).unwrap().size.height, 48f32);
+    assert_eq!(stretch.layout(&node0).unwrap().location.x, 5f32);
+    assert_eq!(stretch.layout(&node0).unwrap().location.y, 5f32);
+    assert_eq!(stretch.layout(&node00).unwrap().size.width, 92f32);
+    assert_eq!(stretch.layout(&node00).unwrap().size.height, 25f32);
+    assert_eq!(stretch.layout(&node00).unwrap().location.x, 8f32);
+    assert_eq!(stretch.layout(&node00).unwrap().location.y, 8f32);
+    assert_eq!(stretch.layout(&node000).unwrap().size.width, 36f32);
+    assert_eq!(stretch.layout(&node000).unwrap().size.height, 6f32);
+    assert_eq!(stretch.layout(&node000).unwrap().location.x, 10f32);
+    assert_eq!(stretch.layout(&node000).unwrap().location.y, 10f32);
+    assert_eq!(stretch.layout(&node1).unwrap().size.width, 200f32);
+    assert_eq!(stretch.layout(&node1).unwrap().size.height, 142f32);
+    assert_eq!(stretch.layout(&node1).unwrap().location.x, 0f32);
+    assert_eq!(stretch.layout(&node1).unwrap().location.y, 58f32);
 }

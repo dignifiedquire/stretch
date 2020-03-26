@@ -1,7 +1,7 @@
 #[test]
 fn flex_basis_smaller_than_main_dimen_column() {
     let mut stretch = stretch::Stretch::new();
-    let node0 = stretch
+    let node0: stretch::node::StretchNode = stretch
         .new_node(
             stretch::style::Style {
                 flex_basis: stretch::style::Dimension::Points(10f32),
@@ -15,7 +15,7 @@ fn flex_basis_smaller_than_main_dimen_column() {
             vec![],
         )
         .unwrap();
-    let node = stretch
+    let node: stretch::node::StretchNode = stretch
         .new_node(
             stretch::style::Style {
                 flex_direction: stretch::style::FlexDirection::Column,
@@ -28,13 +28,13 @@ fn flex_basis_smaller_than_main_dimen_column() {
             vec![node0],
         )
         .unwrap();
-    stretch.compute_layout(node, stretch::geometry::Size::undefined()).unwrap();
-    assert_eq!(stretch.layout(node).unwrap().size.width, 50f32);
-    assert_eq!(stretch.layout(node).unwrap().size.height, 100f32);
-    assert_eq!(stretch.layout(node).unwrap().location.x, 0f32);
-    assert_eq!(stretch.layout(node).unwrap().location.y, 0f32);
-    assert_eq!(stretch.layout(node0).unwrap().size.width, 50f32);
-    assert_eq!(stretch.layout(node0).unwrap().size.height, 10f32);
-    assert_eq!(stretch.layout(node0).unwrap().location.x, 0f32);
-    assert_eq!(stretch.layout(node0).unwrap().location.y, 0f32);
+    stretch.compute_layout(&node, stretch::geometry::Size::undefined()).unwrap();
+    assert_eq!(stretch.layout(&node).unwrap().size.width, 50f32);
+    assert_eq!(stretch.layout(&node).unwrap().size.height, 100f32);
+    assert_eq!(stretch.layout(&node).unwrap().location.x, 0f32);
+    assert_eq!(stretch.layout(&node).unwrap().location.y, 0f32);
+    assert_eq!(stretch.layout(&node0).unwrap().size.width, 50f32);
+    assert_eq!(stretch.layout(&node0).unwrap().size.height, 10f32);
+    assert_eq!(stretch.layout(&node0).unwrap().location.x, 0f32);
+    assert_eq!(stretch.layout(&node0).unwrap().location.y, 0f32);
 }

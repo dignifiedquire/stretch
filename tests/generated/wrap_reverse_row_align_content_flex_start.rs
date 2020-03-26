@@ -1,7 +1,7 @@
 #[test]
 fn wrap_reverse_row_align_content_flex_start() {
     let mut stretch = stretch::Stretch::new();
-    let node0 = stretch
+    let node0: stretch::node::StretchNode = stretch
         .new_node(
             stretch::style::Style {
                 size: stretch::geometry::Size {
@@ -14,7 +14,7 @@ fn wrap_reverse_row_align_content_flex_start() {
             vec![],
         )
         .unwrap();
-    let node1 = stretch
+    let node1: stretch::node::StretchNode = stretch
         .new_node(
             stretch::style::Style {
                 size: stretch::geometry::Size {
@@ -27,7 +27,7 @@ fn wrap_reverse_row_align_content_flex_start() {
             vec![],
         )
         .unwrap();
-    let node2 = stretch
+    let node2: stretch::node::StretchNode = stretch
         .new_node(
             stretch::style::Style {
                 size: stretch::geometry::Size {
@@ -40,7 +40,7 @@ fn wrap_reverse_row_align_content_flex_start() {
             vec![],
         )
         .unwrap();
-    let node3 = stretch
+    let node3: stretch::node::StretchNode = stretch
         .new_node(
             stretch::style::Style {
                 size: stretch::geometry::Size {
@@ -53,7 +53,7 @@ fn wrap_reverse_row_align_content_flex_start() {
             vec![],
         )
         .unwrap();
-    let node4 = stretch
+    let node4: stretch::node::StretchNode = stretch
         .new_node(
             stretch::style::Style {
                 size: stretch::geometry::Size {
@@ -66,7 +66,7 @@ fn wrap_reverse_row_align_content_flex_start() {
             vec![],
         )
         .unwrap();
-    let node = stretch
+    let node: stretch::node::StretchNode = stretch
         .new_node(
             stretch::style::Style {
                 flex_wrap: stretch::style::FlexWrap::WrapReverse,
@@ -80,29 +80,29 @@ fn wrap_reverse_row_align_content_flex_start() {
             vec![node0, node1, node2, node3, node4],
         )
         .unwrap();
-    stretch.compute_layout(node, stretch::geometry::Size::undefined()).unwrap();
-    assert_eq!(stretch.layout(node).unwrap().size.width, 100f32);
-    assert_eq!(stretch.layout(node).unwrap().size.height, 80f32);
-    assert_eq!(stretch.layout(node).unwrap().location.x, 0f32);
-    assert_eq!(stretch.layout(node).unwrap().location.y, 0f32);
-    assert_eq!(stretch.layout(node0).unwrap().size.width, 30f32);
-    assert_eq!(stretch.layout(node0).unwrap().size.height, 10f32);
-    assert_eq!(stretch.layout(node0).unwrap().location.x, 0f32);
-    assert_eq!(stretch.layout(node0).unwrap().location.y, 70f32);
-    assert_eq!(stretch.layout(node1).unwrap().size.width, 30f32);
-    assert_eq!(stretch.layout(node1).unwrap().size.height, 20f32);
-    assert_eq!(stretch.layout(node1).unwrap().location.x, 30f32);
-    assert_eq!(stretch.layout(node1).unwrap().location.y, 60f32);
-    assert_eq!(stretch.layout(node2).unwrap().size.width, 30f32);
-    assert_eq!(stretch.layout(node2).unwrap().size.height, 30f32);
-    assert_eq!(stretch.layout(node2).unwrap().location.x, 60f32);
-    assert_eq!(stretch.layout(node2).unwrap().location.y, 50f32);
-    assert_eq!(stretch.layout(node3).unwrap().size.width, 30f32);
-    assert_eq!(stretch.layout(node3).unwrap().size.height, 40f32);
-    assert_eq!(stretch.layout(node3).unwrap().location.x, 0f32);
-    assert_eq!(stretch.layout(node3).unwrap().location.y, 10f32);
-    assert_eq!(stretch.layout(node4).unwrap().size.width, 30f32);
-    assert_eq!(stretch.layout(node4).unwrap().size.height, 50f32);
-    assert_eq!(stretch.layout(node4).unwrap().location.x, 30f32);
-    assert_eq!(stretch.layout(node4).unwrap().location.y, 0f32);
+    stretch.compute_layout(&node, stretch::geometry::Size::undefined()).unwrap();
+    assert_eq!(stretch.layout(&node).unwrap().size.width, 100f32);
+    assert_eq!(stretch.layout(&node).unwrap().size.height, 80f32);
+    assert_eq!(stretch.layout(&node).unwrap().location.x, 0f32);
+    assert_eq!(stretch.layout(&node).unwrap().location.y, 0f32);
+    assert_eq!(stretch.layout(&node0).unwrap().size.width, 30f32);
+    assert_eq!(stretch.layout(&node0).unwrap().size.height, 10f32);
+    assert_eq!(stretch.layout(&node0).unwrap().location.x, 0f32);
+    assert_eq!(stretch.layout(&node0).unwrap().location.y, 70f32);
+    assert_eq!(stretch.layout(&node1).unwrap().size.width, 30f32);
+    assert_eq!(stretch.layout(&node1).unwrap().size.height, 20f32);
+    assert_eq!(stretch.layout(&node1).unwrap().location.x, 30f32);
+    assert_eq!(stretch.layout(&node1).unwrap().location.y, 60f32);
+    assert_eq!(stretch.layout(&node2).unwrap().size.width, 30f32);
+    assert_eq!(stretch.layout(&node2).unwrap().size.height, 30f32);
+    assert_eq!(stretch.layout(&node2).unwrap().location.x, 60f32);
+    assert_eq!(stretch.layout(&node2).unwrap().location.y, 50f32);
+    assert_eq!(stretch.layout(&node3).unwrap().size.width, 30f32);
+    assert_eq!(stretch.layout(&node3).unwrap().size.height, 40f32);
+    assert_eq!(stretch.layout(&node3).unwrap().location.x, 0f32);
+    assert_eq!(stretch.layout(&node3).unwrap().location.y, 10f32);
+    assert_eq!(stretch.layout(&node4).unwrap().size.width, 30f32);
+    assert_eq!(stretch.layout(&node4).unwrap().size.height, 50f32);
+    assert_eq!(stretch.layout(&node4).unwrap().location.x, 30f32);
+    assert_eq!(stretch.layout(&node4).unwrap().location.y, 0f32);
 }

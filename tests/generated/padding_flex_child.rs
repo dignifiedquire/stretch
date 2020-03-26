@@ -1,7 +1,7 @@
 #[test]
 fn padding_flex_child() {
     let mut stretch = stretch::Stretch::new();
-    let node0 = stretch
+    let node0: stretch::node::StretchNode = stretch
         .new_node(
             stretch::style::Style {
                 flex_grow: 1f32,
@@ -11,7 +11,7 @@ fn padding_flex_child() {
             vec![],
         )
         .unwrap();
-    let node = stretch
+    let node: stretch::node::StretchNode = stretch
         .new_node(
             stretch::style::Style {
                 size: stretch::geometry::Size {
@@ -31,13 +31,13 @@ fn padding_flex_child() {
             vec![node0],
         )
         .unwrap();
-    stretch.compute_layout(node, stretch::geometry::Size::undefined()).unwrap();
-    assert_eq!(stretch.layout(node).unwrap().size.width, 100f32);
-    assert_eq!(stretch.layout(node).unwrap().size.height, 100f32);
-    assert_eq!(stretch.layout(node).unwrap().location.x, 0f32);
-    assert_eq!(stretch.layout(node).unwrap().location.y, 0f32);
-    assert_eq!(stretch.layout(node0).unwrap().size.width, 80f32);
-    assert_eq!(stretch.layout(node0).unwrap().size.height, 80f32);
-    assert_eq!(stretch.layout(node0).unwrap().location.x, 10f32);
-    assert_eq!(stretch.layout(node0).unwrap().location.y, 10f32);
+    stretch.compute_layout(&node, stretch::geometry::Size::undefined()).unwrap();
+    assert_eq!(stretch.layout(&node).unwrap().size.width, 100f32);
+    assert_eq!(stretch.layout(&node).unwrap().size.height, 100f32);
+    assert_eq!(stretch.layout(&node).unwrap().location.x, 0f32);
+    assert_eq!(stretch.layout(&node).unwrap().location.y, 0f32);
+    assert_eq!(stretch.layout(&node0).unwrap().size.width, 80f32);
+    assert_eq!(stretch.layout(&node0).unwrap().size.height, 80f32);
+    assert_eq!(stretch.layout(&node0).unwrap().location.x, 10f32);
+    assert_eq!(stretch.layout(&node0).unwrap().location.y, 10f32);
 }

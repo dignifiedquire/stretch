@@ -1,6 +1,6 @@
 pub fn compute() {
     let mut stretch = stretch::Stretch::new();
-    let node00 = stretch
+    let node00: stretch::node::StretchNode = stretch
         .new_node(
             stretch::style::Style {
                 size: stretch::geometry::Size {
@@ -13,7 +13,7 @@ pub fn compute() {
             vec![],
         )
         .unwrap();
-    let node0 = stretch
+    let node0: stretch::node::StretchNode = stretch
         .new_node(
             stretch::style::Style {
                 flex_direction: stretch::style::FlexDirection::Column,
@@ -24,7 +24,7 @@ pub fn compute() {
             vec![node00],
         )
         .unwrap();
-    let node10 = stretch
+    let node10: stretch::node::StretchNode = stretch
         .new_node(
             stretch::style::Style {
                 size: stretch::geometry::Size {
@@ -37,7 +37,7 @@ pub fn compute() {
             vec![],
         )
         .unwrap();
-    let node1 = stretch
+    let node1: stretch::node::StretchNode = stretch
         .new_node(
             stretch::style::Style {
                 flex_direction: stretch::style::FlexDirection::Column,
@@ -48,6 +48,7 @@ pub fn compute() {
             vec![node10],
         )
         .unwrap();
-    let node = stretch.new_node(stretch::style::Style { ..Default::default() }, vec![node0, node1]).unwrap();
-    stretch.compute_layout(node, stretch::geometry::Size::undefined()).unwrap();
+    let node: stretch::node::StretchNode =
+        stretch.new_node(stretch::style::Style { ..Default::default() }, vec![node0, node1]).unwrap();
+    stretch.compute_layout(&node, stretch::geometry::Size::undefined()).unwrap();
 }

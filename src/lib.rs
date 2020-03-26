@@ -20,20 +20,20 @@ pub mod style;
 
 mod algo;
 mod forest;
-mod id;
+pub mod id;
 
 pub use crate::node::Stretch;
 
 use core::any::Any;
 
 #[derive(Debug)]
-pub enum Error {
-    InvalidNode(node::Node),
+pub enum Error<N: node::Node> {
+    InvalidNode(N),
     Measure(Box<dyn Any>),
 }
 
 #[cfg(feature = "std")]
-impl std::fmt::Display for Error {
+impl<N: node::Node> std::fmt::Display for Error<N> {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match *self {
             Error::InvalidNode(ref node) => write!(f, "Invalid node {:?}", node),
@@ -43,7 +43,7 @@ impl std::fmt::Display for Error {
 }
 
 #[cfg(feature = "std")]
-impl std::error::Error for Error {
+impl<N: node::Node> std::error::Error for Error<N> {
     fn description(&self) -> &str {
         match *self {
             Error::InvalidNode(_) => "The node is not part of the stretch instance",

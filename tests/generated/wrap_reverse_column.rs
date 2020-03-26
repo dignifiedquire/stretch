@@ -1,7 +1,7 @@
 #[test]
 fn wrap_reverse_column() {
     let mut stretch = stretch::Stretch::new();
-    let node0 = stretch
+    let node0: stretch::node::StretchNode = stretch
         .new_node(
             stretch::style::Style {
                 size: stretch::geometry::Size {
@@ -14,7 +14,7 @@ fn wrap_reverse_column() {
             vec![],
         )
         .unwrap();
-    let node1 = stretch
+    let node1: stretch::node::StretchNode = stretch
         .new_node(
             stretch::style::Style {
                 size: stretch::geometry::Size {
@@ -27,7 +27,7 @@ fn wrap_reverse_column() {
             vec![],
         )
         .unwrap();
-    let node2 = stretch
+    let node2: stretch::node::StretchNode = stretch
         .new_node(
             stretch::style::Style {
                 size: stretch::geometry::Size {
@@ -40,7 +40,7 @@ fn wrap_reverse_column() {
             vec![],
         )
         .unwrap();
-    let node3 = stretch
+    let node3: stretch::node::StretchNode = stretch
         .new_node(
             stretch::style::Style {
                 size: stretch::geometry::Size {
@@ -53,7 +53,7 @@ fn wrap_reverse_column() {
             vec![],
         )
         .unwrap();
-    let node = stretch
+    let node: stretch::node::StretchNode = stretch
         .new_node(
             stretch::style::Style {
                 flex_direction: stretch::style::FlexDirection::Column,
@@ -68,25 +68,25 @@ fn wrap_reverse_column() {
             vec![node0, node1, node2, node3],
         )
         .unwrap();
-    stretch.compute_layout(node, stretch::geometry::Size::undefined()).unwrap();
-    assert_eq!(stretch.layout(node).unwrap().size.width, 100f32);
-    assert_eq!(stretch.layout(node).unwrap().size.height, 100f32);
-    assert_eq!(stretch.layout(node).unwrap().location.x, 0f32);
-    assert_eq!(stretch.layout(node).unwrap().location.y, 0f32);
-    assert_eq!(stretch.layout(node0).unwrap().size.width, 30f32);
-    assert_eq!(stretch.layout(node0).unwrap().size.height, 31f32);
-    assert_eq!(stretch.layout(node0).unwrap().location.x, 70f32);
-    assert_eq!(stretch.layout(node0).unwrap().location.y, 0f32);
-    assert_eq!(stretch.layout(node1).unwrap().size.width, 30f32);
-    assert_eq!(stretch.layout(node1).unwrap().size.height, 32f32);
-    assert_eq!(stretch.layout(node1).unwrap().location.x, 70f32);
-    assert_eq!(stretch.layout(node1).unwrap().location.y, 31f32);
-    assert_eq!(stretch.layout(node2).unwrap().size.width, 30f32);
-    assert_eq!(stretch.layout(node2).unwrap().size.height, 33f32);
-    assert_eq!(stretch.layout(node2).unwrap().location.x, 70f32);
-    assert_eq!(stretch.layout(node2).unwrap().location.y, 63f32);
-    assert_eq!(stretch.layout(node3).unwrap().size.width, 30f32);
-    assert_eq!(stretch.layout(node3).unwrap().size.height, 34f32);
-    assert_eq!(stretch.layout(node3).unwrap().location.x, 20f32);
-    assert_eq!(stretch.layout(node3).unwrap().location.y, 0f32);
+    stretch.compute_layout(&node, stretch::geometry::Size::undefined()).unwrap();
+    assert_eq!(stretch.layout(&node).unwrap().size.width, 100f32);
+    assert_eq!(stretch.layout(&node).unwrap().size.height, 100f32);
+    assert_eq!(stretch.layout(&node).unwrap().location.x, 0f32);
+    assert_eq!(stretch.layout(&node).unwrap().location.y, 0f32);
+    assert_eq!(stretch.layout(&node0).unwrap().size.width, 30f32);
+    assert_eq!(stretch.layout(&node0).unwrap().size.height, 31f32);
+    assert_eq!(stretch.layout(&node0).unwrap().location.x, 70f32);
+    assert_eq!(stretch.layout(&node0).unwrap().location.y, 0f32);
+    assert_eq!(stretch.layout(&node1).unwrap().size.width, 30f32);
+    assert_eq!(stretch.layout(&node1).unwrap().size.height, 32f32);
+    assert_eq!(stretch.layout(&node1).unwrap().location.x, 70f32);
+    assert_eq!(stretch.layout(&node1).unwrap().location.y, 31f32);
+    assert_eq!(stretch.layout(&node2).unwrap().size.width, 30f32);
+    assert_eq!(stretch.layout(&node2).unwrap().size.height, 33f32);
+    assert_eq!(stretch.layout(&node2).unwrap().location.x, 70f32);
+    assert_eq!(stretch.layout(&node2).unwrap().location.y, 63f32);
+    assert_eq!(stretch.layout(&node3).unwrap().size.width, 30f32);
+    assert_eq!(stretch.layout(&node3).unwrap().size.height, 34f32);
+    assert_eq!(stretch.layout(&node3).unwrap().location.x, 20f32);
+    assert_eq!(stretch.layout(&node3).unwrap().location.y, 0f32);
 }

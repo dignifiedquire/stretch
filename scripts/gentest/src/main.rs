@@ -187,7 +187,7 @@ fn generate_bench(description: &json::JsonValue) -> TokenStream {
         pub fn compute() {
             let mut stretch = stretch::Stretch::new();
             #node_description
-            stretch.compute_layout(node, stretch::geometry::Size::undefined()).unwrap();
+            stretch.compute_layout(&node, stretch::geometry::Size::undefined()).unwrap();
         }
     )
 }
@@ -203,7 +203,7 @@ fn generate_test(name: impl AsRef<str>, description: &json::JsonValue) -> TokenS
         fn #name() {
             let mut stretch = stretch::Stretch::new();
             #node_description
-            stretch.compute_layout(node, stretch::geometry::Size::undefined()).unwrap();
+            stretch.compute_layout(&node, stretch::geometry::Size::undefined()).unwrap();
             #assertions
         }
     )
@@ -235,10 +235,10 @@ fn generate_assertions(ident: &str, node: &json::JsonValue) -> TokenStream {
     let ident = Ident::new(ident, Span::call_site());
 
     quote!(
-        assert_eq!(stretch.layout(#ident).unwrap().size.width, #width);
-        assert_eq!(stretch.layout(#ident).unwrap().size.height, #height);
-        assert_eq!(stretch.layout(#ident).unwrap().location.x, #x);
-        assert_eq!(stretch.layout(#ident).unwrap().location.y, #y);
+        assert_eq!(stretch.layout(&#ident).unwrap().size.width, #width);
+        assert_eq!(stretch.layout(&#ident).unwrap().size.height, #height);
+        assert_eq!(stretch.layout(&#ident).unwrap().location.x, #x);
+        assert_eq!(stretch.layout(&#ident).unwrap().location.y, #y);
 
         #children
     )
@@ -437,7 +437,7 @@ fn generate_node(ident: &str, node: &json::JsonValue) -> TokenStream {
 
     quote!(
         #children_body
-        let #ident = stretch.new_node(
+        let #ident: stretch::node::StretchNode = stretch.new_node(
         stretch::style::Style {
             #display
             #direction

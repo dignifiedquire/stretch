@@ -1,7 +1,7 @@
 #[test]
 fn rounding_fractial_input_1() {
     let mut stretch = stretch::Stretch::new();
-    let node0 = stretch
+    let node0: stretch::node::StretchNode = stretch
         .new_node(
             stretch::style::Style {
                 flex_grow: 1f32,
@@ -15,7 +15,7 @@ fn rounding_fractial_input_1() {
             vec![],
         )
         .unwrap();
-    let node1 = stretch
+    let node1: stretch::node::StretchNode = stretch
         .new_node(
             stretch::style::Style {
                 flex_grow: 1f32,
@@ -28,7 +28,7 @@ fn rounding_fractial_input_1() {
             vec![],
         )
         .unwrap();
-    let node2 = stretch
+    let node2: stretch::node::StretchNode = stretch
         .new_node(
             stretch::style::Style {
                 flex_grow: 1f32,
@@ -41,7 +41,7 @@ fn rounding_fractial_input_1() {
             vec![],
         )
         .unwrap();
-    let node = stretch
+    let node: stretch::node::StretchNode = stretch
         .new_node(
             stretch::style::Style {
                 flex_direction: stretch::style::FlexDirection::Column,
@@ -55,21 +55,21 @@ fn rounding_fractial_input_1() {
             vec![node0, node1, node2],
         )
         .unwrap();
-    stretch.compute_layout(node, stretch::geometry::Size::undefined()).unwrap();
-    assert_eq!(stretch.layout(node).unwrap().size.width, 100f32);
-    assert_eq!(stretch.layout(node).unwrap().size.height, 113f32);
-    assert_eq!(stretch.layout(node).unwrap().location.x, 0f32);
-    assert_eq!(stretch.layout(node).unwrap().location.y, 0f32);
-    assert_eq!(stretch.layout(node0).unwrap().size.width, 100f32);
-    assert_eq!(stretch.layout(node0).unwrap().size.height, 64f32);
-    assert_eq!(stretch.layout(node0).unwrap().location.x, 0f32);
-    assert_eq!(stretch.layout(node0).unwrap().location.y, 0f32);
-    assert_eq!(stretch.layout(node1).unwrap().size.width, 100f32);
-    assert_eq!(stretch.layout(node1).unwrap().size.height, 25f32);
-    assert_eq!(stretch.layout(node1).unwrap().location.x, 0f32);
-    assert_eq!(stretch.layout(node1).unwrap().location.y, 64f32);
-    assert_eq!(stretch.layout(node2).unwrap().size.width, 100f32);
-    assert_eq!(stretch.layout(node2).unwrap().size.height, 24f32);
-    assert_eq!(stretch.layout(node2).unwrap().location.x, 0f32);
-    assert_eq!(stretch.layout(node2).unwrap().location.y, 89f32);
+    stretch.compute_layout(&node, stretch::geometry::Size::undefined()).unwrap();
+    assert_eq!(stretch.layout(&node).unwrap().size.width, 100f32);
+    assert_eq!(stretch.layout(&node).unwrap().size.height, 113f32);
+    assert_eq!(stretch.layout(&node).unwrap().location.x, 0f32);
+    assert_eq!(stretch.layout(&node).unwrap().location.y, 0f32);
+    assert_eq!(stretch.layout(&node0).unwrap().size.width, 100f32);
+    assert_eq!(stretch.layout(&node0).unwrap().size.height, 64f32);
+    assert_eq!(stretch.layout(&node0).unwrap().location.x, 0f32);
+    assert_eq!(stretch.layout(&node0).unwrap().location.y, 0f32);
+    assert_eq!(stretch.layout(&node1).unwrap().size.width, 100f32);
+    assert_eq!(stretch.layout(&node1).unwrap().size.height, 25f32);
+    assert_eq!(stretch.layout(&node1).unwrap().location.x, 0f32);
+    assert_eq!(stretch.layout(&node1).unwrap().location.y, 64f32);
+    assert_eq!(stretch.layout(&node2).unwrap().size.width, 100f32);
+    assert_eq!(stretch.layout(&node2).unwrap().size.height, 24f32);
+    assert_eq!(stretch.layout(&node2).unwrap().location.x, 0f32);
+    assert_eq!(stretch.layout(&node2).unwrap().location.y, 89f32);
 }

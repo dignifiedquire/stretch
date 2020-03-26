@@ -172,7 +172,7 @@ impl Forest {
         mark_dirty_impl(&mut self.nodes, &self.parents, node);
     }
 
-    pub fn compute_layout(&mut self, node: NodeId, size: Size<Number>) -> Result<(), Error> {
+    pub fn compute_layout<N: crate::node::Node>(&mut self, node: NodeId, size: Size<Number>) -> Result<(), Error<N>> {
         self.compute(node, size).map_err(|err| Error::Measure(err))
     }
 }

@@ -1,7 +1,8 @@
 use stretch::geometry::Size;
+use stretch::node::StretchNode;
 use stretch::style::*;
 
-fn main() -> Result<(), stretch::Error> {
+fn main() -> Result<(), stretch::Error<StretchNode>> {
     let mut stretch = stretch::node::Stretch::new();
     let child = stretch.new_node(
         Style { size: Size { width: Dimension::Percent(0.5), height: Dimension::Auto }, ..Default::default() },
@@ -16,9 +17,9 @@ fn main() -> Result<(), stretch::Error> {
         vec![child],
     )?;
 
-    stretch.compute_layout(node, Size::undefined())?;
-    println!("node: {:#?}", stretch.layout(node)?);
-    println!("child: {:#?}", stretch.layout(child)?);
+    stretch.compute_layout(&node, Size::undefined())?;
+    println!("node: {:#?}", stretch.layout(&node)?);
+    println!("child: {:#?}", stretch.layout(&child)?);
 
     Ok(())
 }

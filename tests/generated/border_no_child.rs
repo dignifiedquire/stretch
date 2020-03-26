@@ -1,7 +1,7 @@
 #[test]
 fn border_no_child() {
     let mut stretch = stretch::Stretch::new();
-    let node = stretch
+    let node: stretch::node::StretchNode = stretch
         .new_node(
             stretch::style::Style {
                 border: stretch::geometry::Rect {
@@ -16,9 +16,9 @@ fn border_no_child() {
             vec![],
         )
         .unwrap();
-    stretch.compute_layout(node, stretch::geometry::Size::undefined()).unwrap();
-    assert_eq!(stretch.layout(node).unwrap().size.width, 20f32);
-    assert_eq!(stretch.layout(node).unwrap().size.height, 20f32);
-    assert_eq!(stretch.layout(node).unwrap().location.x, 0f32);
-    assert_eq!(stretch.layout(node).unwrap().location.y, 0f32);
+    stretch.compute_layout(&node, stretch::geometry::Size::undefined()).unwrap();
+    assert_eq!(stretch.layout(&node).unwrap().size.width, 20f32);
+    assert_eq!(stretch.layout(&node).unwrap().size.height, 20f32);
+    assert_eq!(stretch.layout(&node).unwrap().location.x, 0f32);
+    assert_eq!(stretch.layout(&node).unwrap().location.y, 0f32);
 }
