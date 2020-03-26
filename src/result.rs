@@ -17,9 +17,8 @@ impl Layout {
 
 #[derive(Debug, Clone)]
 pub struct Cache {
-    pub(crate) node_size: Size<Number>,
-    pub(crate) parent_size: Size<Number>,
-    pub(crate) perform_layout: bool,
-
-    pub(crate) result: ComputeResult,
+    pub node_size: Size<Number>,
+    pub parent_size: Size<Number>,
+    pub perform_layout: bool,
+    pub result: ComputeResult,
 }

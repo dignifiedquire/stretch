@@ -49,6 +49,7 @@ impl Node for StretchNode {
     }
 }
 
+#[derive(Debug)]
 pub struct Stretch<N: Node = StretchNode> {
     id: id::Id,
     nodes: id::Allocator,

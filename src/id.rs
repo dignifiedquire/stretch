@@ -14,6 +14,7 @@ pub struct Id {
     generation: u32,
 }
 
+#[derive(Debug)]
 pub(crate) struct Allocator {
     new_id: atomic::AtomicU32,
     free_ids: spin::RwLock<IdCache>,

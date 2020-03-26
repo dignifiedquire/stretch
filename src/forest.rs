@@ -78,6 +78,7 @@ impl NodeData for StretchNodeData {
     }
 }
 
+#[derive(Debug)]
 pub(crate) struct Forest<D: NodeData> {
     pub(crate) nodes: Vec<D>,
     pub(crate) children: Vec<Vec<NodeId>>,

@@ -22,6 +22,7 @@ mod algo;
 mod forest;
 pub mod id;
 
+pub use crate::forest::{NodeData, StretchNodeData};
 pub use crate::node::Stretch;
 
 use core::any::Any;
